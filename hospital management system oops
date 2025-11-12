@@ -1,0 +1,54 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Hospital {
+    int id;
+    string name, disease;
+
+public:
+    void addPatient() {
+        ofstream file("patients.txt", ios::app);
+        cout << "\nEnter Patient ID: ";
+        cin >> id;
+        cin.ignore();
+        cout << "Enter Patient Name: ";
+        getline(cin, name);
+        cout << "Enter Disease: ";
+        getline(cin, disease);
+        file << id << "," << name << "," << disease << "\n";
+        file.close();
+        cout << "Patient Record Added Successfully!\n";
+    }
+
+    void viewPatients() {
+        ifstream file("patients.txt");
+        string line;
+        cout << "\n--- Patient Records ---\n";
+        while (getline(file, line)) {
+            cout << line << endl;
+        }
+        file.close();
+    }
+
+    void menu() {
+        int ch;
+        do {
+            cout << "\n=== HOSPITAL MANAGEMENT SYSTEM ===\n";
+            cout << "1. Add Patient\n2. View Patients\n3. Exit\nEnter choice: ";
+            cin >> ch;
+            switch (ch) {
+                case 1: addPatient(); break;
+                case 2: viewPatients(); break;
+                case 3: cout << "Exiting...\n"; break;
+                default: cout << "Invalid choice!\n";
+            }
+        } while (ch != 3);
+    }
+};
+
+int main() {
+    Hospital h;
+    h.menu();
+    return 0;
+}
